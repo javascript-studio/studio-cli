@@ -14,14 +14,45 @@ const render_report = require('../lib/render-report');
 
 const argv = minimist(process.argv.slice(2));
 const project_name = argv.project;
+
+let stream;
+if (argv._.length) {
+  const browserify = require('browserify');
+  stream = browserify(argv._, {
+    builtins: false,
+    commondir: false,
+    detectGlobals: false,
+    standalone: 'studio_main'
+  }).bundle();
+} else {
+  process.stdin.setEncoding('utf8');
+  stream = process.stdin;
+}
+
 if (!project_name) {
   console.error(' 🚨  Missing `--project`');
   process.exitCode = 1;
   return;
 }
 
-process.stdin.setEncoding('utf8');
-process.stdin.pause();
+let pack = null;
+let stream_end = false;
+let source = '';
+
+function pack_source() {
+  pack.entry({ name: 'index.js' }, source);
+  pack.finalize();
+}
+
+stream.on('data', (chunk) => {
+  source += chunk;
+});
+stream.on('end', () => {
+  stream_end = true;
+  if (pack) {
+    pack_source();
+  }
+});
 
 const config_file = path.join(studio_config.home(), '.studio', 'config');
 
@@ -42,7 +73,7 @@ studio_config.read(config_file, (err, values) => {
     token: values.token
   };
 
-  const pack = upload(config, project_name, (err, upload_json) => {
+  pack = upload(config, project_name, (err, upload_json) => {
     if (err) {
       throw err;
     }
@@ -53,14 +84,7 @@ studio_config.read(config_file, (err, values) => {
       render_report(project_name, report_json);
     });
   });
-
-  let source = '';
-  process.stdin.on('data', (chunk) => {
-    source += chunk;
-  });
-  process.stdin.on('end', () => {
-    pack.entry({ name: 'index.js' }, source);
-    pack.finalize();
-  });
-  process.stdin.resume();
+  if (stream_end) {
+    pack_source();
+  }
 });
