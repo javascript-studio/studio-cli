@@ -14,7 +14,6 @@ const load_report = require('../lib/load-report');
 const render_report = require('../lib/render-report');
 
 const argv = minimist(process.argv.slice(2));
-const project_name = argv.project;
 
 let stream;
 if (argv._.length) {
@@ -31,25 +30,19 @@ if (argv._.length) {
   stream = process.stdin;
 }
 
-if (!project_name) {
-  console.error(' 🚨  Missing `--project`');
-  process.exitCode = 1;
-  return;
-}
-
-let pack = null;
+let gzip = null;
 let stream_end = false;
 let source = '';
 let source_map;
 
-function pack_source() {
+function upload_source() {
   source_map = convert_source_map.fromSource(source);
   if (source_map) {
     source_map = source_map.toObject();
     source = convert_source_map.removeComments(source);
   }
-  pack.entry({ name: 'index.js' }, source);
-  pack.finalize();
+  gzip.write(source);
+  gzip.end();
 }
 
 stream.on('data', (chunk) => {
@@ -57,8 +50,8 @@ stream.on('data', (chunk) => {
 });
 stream.on('end', () => {
   stream_end = true;
-  if (pack) {
-    pack_source();
+  if (gzip) {
+    upload_source();
   }
 });
 
@@ -81,18 +74,18 @@ studio_config.read(config_file, (err, values) => {
     token: values.token
   };
 
-  pack = upload(config, project_name, (err, upload_json) => {
+  gzip = upload(config, (err, upload_json) => {
     if (err) {
       throw err;
     }
-    load_report(config, project_name, upload_json.ref, (err, report_json) => {
+    load_report(config, upload_json.ref, (err, report_json) => {
       if (err) {
         throw err;
       }
-      render_report(project_name, upload_json.ref, report_json, source_map);
+      render_report(upload_json.ref, report_json, source_map);
     });
   });
   if (stream_end) {
-    pack_source();
+    upload_source();
   }
 });
