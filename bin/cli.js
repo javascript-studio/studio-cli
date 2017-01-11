@@ -6,29 +6,11 @@
 
 const path = require('path');
 const url = require('url');
-const minimist = require('minimist');
 const convert_source_map = require('convert-source-map');
 const studio_config = require('../lib/config');
 const upload = require('../lib/upload');
 const load_report = require('../lib/load-report');
 const render_report = require('../lib/render-report');
-
-const argv = minimist(process.argv.slice(2));
-
-let stream;
-if (argv._.length) {
-  const browserify = require('browserify');
-  stream = browserify(argv._, {
-    builtins: false,
-    commondir: false,
-    detectGlobals: false,
-    standalone: 'studio_main',
-    debug: true
-  }).bundle();
-} else {
-  process.stdin.setEncoding('utf8');
-  stream = process.stdin;
-}
 
 let gzip = null;
 let stream_end = false;
@@ -45,10 +27,11 @@ function upload_source() {
   gzip.end();
 }
 
-stream.on('data', (chunk) => {
+process.stdin.setEncoding('utf8');
+process.stdin.on('data', (chunk) => {
   source += chunk;
 });
-stream.on('end', () => {
+process.stdin.on('end', () => {
   stream_end = true;
   if (gzip) {
     upload_source();
