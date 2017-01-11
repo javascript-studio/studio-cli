@@ -7,6 +7,7 @@
 const path = require('path');
 const url = require('url');
 const minimist = require('minimist');
+const convert_source_map = require('convert-source-map');
 const studio_config = require('../lib/config');
 const upload = require('../lib/upload');
 const load_report = require('../lib/load-report');
@@ -22,7 +23,8 @@ if (argv._.length) {
     builtins: false,
     commondir: false,
     detectGlobals: false,
-    standalone: 'studio_main'
+    standalone: 'studio_main',
+    debug: true
   }).bundle();
 } else {
   process.stdin.setEncoding('utf8');
@@ -38,8 +40,14 @@ if (!project_name) {
 let pack = null;
 let stream_end = false;
 let source = '';
+let source_map;
 
 function pack_source() {
+  source_map = convert_source_map.fromSource(source);
+  if (source_map) {
+    source_map = source_map.toObject();
+    source = convert_source_map.removeComments(source);
+  }
   pack.entry({ name: 'index.js' }, source);
   pack.finalize();
 }
@@ -81,7 +89,7 @@ studio_config.read(config_file, (err, values) => {
       if (err) {
         throw err;
       }
-      render_report(project_name, report_json);
+      render_report(project_name, upload_json.ref, report_json, source_map);
     });
   });
   if (stream_end) {
