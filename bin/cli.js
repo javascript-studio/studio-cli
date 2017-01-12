@@ -6,12 +6,14 @@
 
 const path = require('path');
 const url = require('url');
+const minimist = require('minimist');
 const convert_source_map = require('convert-source-map');
 const studio_config = require('../lib/config');
 const upload = require('../lib/upload');
 const load_report = require('../lib/load-report');
 const render_report = require('../lib/render-report');
 
+const argv = minimist(process.argv.slice(2));
 let gzip = null;
 let stream_end = false;
 let source = '';
@@ -57,7 +59,13 @@ studio_config.read(config_file, (err, values) => {
     token: values.token
   };
 
-  gzip = upload(config, (err, upload_json) => {
+  let data = null;
+  if (argv.global) {
+    data = {
+      global: argv.global
+    };
+  }
+  gzip = upload(config, data, (err, upload_json) => {
     if (err) {
       throw err;
     }
