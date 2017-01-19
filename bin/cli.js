@@ -85,7 +85,7 @@ studio_config.read(config_file, (err, values) => {
   config = {
     protocol: api_url.protocol,
     hostname: api_url.hostname,
-    basepath: api_url.path,
+    basepath: api_url.path === '/' ? '' : api_url.path,
     port: api_url.port,
     account: values.account,
     token: values.token
