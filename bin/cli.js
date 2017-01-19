@@ -20,7 +20,6 @@ let stream_end = false;
 let config = null;
 let url_json = null;
 let gzip_buffer = null;
-let content_length = 0;
 let source = '';
 let source_map;
 
@@ -31,7 +30,7 @@ function fail(message) {
 
 function upload_gzip() {
   const stream = new PassThrough();
-  upload.upload(url_json.url, stream, content_length, (err) => {
+  upload.upload(url_json.url, stream, gzip_buffer.length, (err) => {
     if (err) {
       fail(`Failed to upload file: ${err.message}`);
       return;
@@ -65,7 +64,6 @@ process.stdin.on('end', () => {
   const gzip = zlib.createGzip();
   const chunks = [];
   gzip.on('data', (chunk) => {
-    content_length += chunk.length;
     chunks.push(chunk);
   });
   gzip.on('end', () => {
