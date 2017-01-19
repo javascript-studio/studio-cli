@@ -53,6 +53,10 @@ process.stdin.on('data', (chunk) => {
   source += chunk;
 });
 process.stdin.on('end', () => {
+  if (!source) {
+    fail('No sources received on stdin');
+    return;
+  }
   source_map = convert_source_map.fromSource(source);
   if (source_map) {
     source_map = source_map.toObject();
