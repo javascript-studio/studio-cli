@@ -16,11 +16,10 @@ const load_report = require('../lib/load-report');
 const render_report = require('../lib/render-report');
 
 const argv = minimist(process.argv.slice(2));
-const stream = new PassThrough();
-stream.pause();
 let stream_end = false;
 let config = null;
 let url_json = null;
+let gzip_buffer = null;
 let content_length = 0;
 let source = '';
 let source_map;
@@ -31,6 +30,7 @@ function fail(message) {
 }
 
 function upload_gzip() {
+  const stream = new PassThrough();
   upload.upload(url_json.url, stream, content_length, (err) => {
     if (err) {
       fail(`Failed to upload file: ${err.message}`);
@@ -44,7 +44,8 @@ function upload_gzip() {
       render_report(url_json.ref, report_json, source_map);
     });
   });
-  stream.resume();
+  stream.write(gzip_buffer);
+  stream.end();
 }
 
 process.stdin.setEncoding('utf8');
@@ -58,11 +59,13 @@ process.stdin.on('end', () => {
     source = convert_source_map.removeComments(source);
   }
   const gzip = zlib.createGzip();
-  gzip.pipe(stream);
+  const chunks = [];
   gzip.on('data', (chunk) => {
     content_length += chunk.length;
+    chunks.push(chunk);
   });
   gzip.on('end', () => {
+    gzip_buffer = Buffer.concat(chunks);
     stream_end = true;
     if (url_json) {
       upload_gzip();
