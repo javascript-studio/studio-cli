@@ -35,12 +35,12 @@ function upload_gzip() {
       fail(`Failed to upload file: ${err.message}`);
       return;
     }
-    load_report(config, url_json.ref, (err, report_json) => {
+    load_report(config, url_json.number, (err, report_json) => {
       if (err) {
         fail(`Failed to load report: ${err.message}`);
         return;
       }
-      render_report(url_json.ref, report_json, source_map);
+      render_report(report_json, source_map);
     });
   });
   stream.write(gzip_buffer);
