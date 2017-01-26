@@ -1,6 +1,11 @@
 # JavaScript Studio CLI
 
-The command line interface for the web service at <http://javascript.studio>.
+Uploads source code to the [JavaScript Studio][1] web service, fetches the
+error report and prints the results.
+
+JavaScript Studio is a cloud service that finds errors in JavaScript programs
+by dynamically evaluating the source code in a custom runtime. If you do not
+have an account, request an invite at <http://javascript.studio>.
 
 ## Install
 
@@ -13,7 +18,7 @@ npm install @studio/cli -g
 Create `~/.studio/config` with this content:
 
 ```json
-# JavaScript Studio Config
+# JavaScript Studio CLI Config
 account=your_account
 token=your_token
 ```
@@ -21,35 +26,31 @@ token=your_token
 These properties can be configured:
 
 - `account`: Your GitHub user name (required).
-- `token`: A JavaScript Studio token. Get a token from
-  <https://javascript.studio/settings> (required).
-- `api`: The API endpoint to use. Defaults to `https://api.javascript.studio`
+- `token`: Your JavaScript Studio access token (required).
+- `api`: The API endpoint to use. Defaults to
+  `https://api.javascript.studio/beta`
 
 ## Usage
 
-```bash
-$ echo "console.log('Hello JavaScript Studio!')" | studio
-```
+Run `studio --help` for all available options.
 
-Script file with global entry point `entry`:
+Pipe any JavaScript to the `studio` command or specify a file to analyze:
 
 ```bash
-$ cat script.js | studio --global entry
+# Analyze a file:
+studio --file script.js
+
+# Using a pipe:
+echo "unknownFunction()" | studio
+
+# With a global entry point or namespace:
+studio -f script.js --global entry
+
+# With browserify:
+browserify --debug script.js | studio
+
+# With browserify as a standalone module:
+browserify --debug script.js -s thing | studio --global thing
 ```
 
-For CommonJS projects, use [Browserify][1] to bundle the files. The `--debug`
-option creates source maps which are recognized by the CLI.
-
-From within a project directory:
-
-```bash
-$ browserify --debug --bare . | studio
-```
-
-From within a browser project directory with a global entry point:
-
-```bash
-$ browserify --debug -s entry . | studio --global entry
-```
-
-[1]: http://browserify.org
+[1]: http://javascript.studio

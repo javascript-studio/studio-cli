@@ -4,6 +4,7 @@
  */
 'use strict';
 
+const fs = require('fs');
 const path = require('path');
 const url = require('url');
 const zlib = require('zlib');
@@ -15,12 +16,30 @@ const upload = require('../lib/upload');
 const load_report = require('../lib/load-report');
 const render_report = require('../lib/render-report');
 
-const argv = minimist(process.argv.slice(2));
+const argv = minimist(process.argv.slice(2), {
+  alias: {
+    file: 'f',
+    global: 'g',
+    help: 'h',
+    version: 'v'
+  }
+});
+
+if (argv.help) {
+  const help_file = path.join(__dirname, 'help.txt');
+  fs.createReadStream(help_file, 'utf8').pipe(process.stdout);
+  return;
+}
+if (argv.version) {
+  const pkg = require('../package.json');
+  console.log(`${pkg.name} version ${pkg.version}`);
+  return;
+}
+
 let stream_end = false;
 let config = null;
 let url_json = null;
 let gzip_buffer = null;
-let source = '';
 let source_map;
 
 function fail(message) {
@@ -47,35 +66,51 @@ function upload_gzip() {
   stream.end();
 }
 
-process.stdin.setEncoding('utf8');
-process.stdin.on('data', (chunk) => {
-  source += chunk;
-});
-process.stdin.on('end', () => {
-  if (!source) {
-    fail('No sources received on stdin');
-    return;
-  }
-  source_map = convert_source_map.fromSource(source);
-  if (source_map) {
-    source_map = source_map.toObject();
-    source = convert_source_map.removeComments(source);
-  }
-  const gzip = zlib.createGzip();
-  const chunks = [];
-  gzip.on('data', (chunk) => {
-    chunks.push(chunk);
+function read_stream(stream) {
+  let source = '';
+  stream.on('data', (chunk) => {
+    source += chunk;
   });
-  gzip.on('end', () => {
-    gzip_buffer = Buffer.concat(chunks);
-    stream_end = true;
-    if (url_json) {
-      upload_gzip();
+  stream.on('end', () => {
+    if (!source) {
+      fail('No sources received on stdin');
+      return;
+    }
+    source_map = convert_source_map.fromSource(source);
+    if (source_map) {
+      source_map = source_map.toObject();
+      source = convert_source_map.removeComments(source);
+    }
+    const gzip = zlib.createGzip();
+    const chunks = [];
+    gzip.on('data', (chunk) => {
+      chunks.push(chunk);
+    });
+    gzip.on('end', () => {
+      gzip_buffer = Buffer.concat(chunks);
+      stream_end = true;
+      if (url_json) {
+        upload_gzip();
+      }
+    });
+    gzip.write(source);
+    gzip.end();
+  });
+}
+
+if (argv.file) {
+  const stream = fs.createReadStream(argv.file, 'utf8');
+  stream.on('error', (err) => {
+    if (err) {
+      fail(`Failed to read file ${argv.file}: ${err.message}`);
+      return;
     }
   });
-  gzip.write(source);
-  gzip.end();
-});
+  read_stream(stream);
+} else {
+  process.stdin.setEncoding('utf8');
+  read_stream(process.stdin);
+}
 
 const config_file = path.join(studio_config.home(), '.studio', 'config');
 
