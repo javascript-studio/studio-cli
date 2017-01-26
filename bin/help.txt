@@ -1,0 +1,14 @@
+Usage: studio [options]
+
+Uploads source code from stdin to the JavaScript Studio web service, fetches
+the error report and prints the results.
+
+  Options:
+      --file, -f  Use the given file instead of stdin.
+
+    --global, -g  A global entry point or namespace to analyze.
+
+   --version, -v  Show the version number and exit.
+
+      --help, -h  Show this help message and exit.
+
