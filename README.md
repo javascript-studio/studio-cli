@@ -27,7 +27,8 @@ These properties can be configured:
 
 - `account`: Your GitHub user name (required).
 - `token`: Your JavaScript Studio access token (required).
-- `api`: The API endpoint to use. Defaults to `https://api.javascript.studio`
+- `api`: The API endpoint to use. Defaults to
+  `https://api.javascript.studio/beta`
 
 ## Usage
 
