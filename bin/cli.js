@@ -21,7 +21,8 @@ const argv = minimist(process.argv.slice(2), {
     file: 'f',
     global: 'g',
     help: 'h',
-    version: 'v'
+    version: 'v',
+    exceptions: 'e'
   }
 });
 
@@ -54,7 +55,7 @@ function upload_gzip() {
       fail(`Failed to upload file: ${err.message}`);
       return;
     }
-    load_report(config, url_json.number, (err, report_json) => {
+    load_report(config, url_json.number, argv, (err, report_json) => {
       if (err) {
         fail(`Failed to load report: ${err.message}`);
         return;

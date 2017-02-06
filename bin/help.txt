@@ -8,6 +8,8 @@ the error report and prints the results.
 
     --global, -g  A global entry point or namespace to analyze.
 
+--exceptions, -e  Show thrown exceptions
+
    --version, -v  Show the version number and exit.
 
       --help, -h  Show this help message and exit.
