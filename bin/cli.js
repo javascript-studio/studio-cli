@@ -65,7 +65,7 @@ function fail(message, error) {
   process.exitCode = 1;
 }
 
-function upload_gzip() {
+function uploadGzip() {
   if (argv.debug) {
     spinner.stop();
   } else {
@@ -89,7 +89,7 @@ function upload_gzip() {
   stream.end();
 }
 
-function read_stream(stream) {
+function readStream(stream) {
   let source = '';
   stream.on('data', (chunk) => {
     source += chunk;
@@ -113,7 +113,7 @@ function read_stream(stream) {
       gzip_buffer = Buffer.concat(chunks);
       stream_end = true;
       if (url_json) {
-        upload_gzip();
+        uploadGzip();
       } else {
         spinner.text = 'Pending upload';
       }
@@ -132,10 +132,10 @@ if (argv.file) {
       return;
     }
   });
-  read_stream(stream);
+  readStream(stream);
 } else {
   process.stdin.setEncoding('utf8');
-  read_stream(process.stdin);
+  readStream(process.stdin);
 }
 
 const config_file = path.join(studio_config.home(), '.studio', 'config');
@@ -174,7 +174,7 @@ studio_config.read(config_file, (err, values) => {
     }
     url_json = json;
     if (stream_end) {
-      upload_gzip();
+      uploadGzip();
     } else if (argv.debug) {
       spinner.start().text = 'Reading input';
     }
