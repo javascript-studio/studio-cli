@@ -1,5 +1,9 @@
 # Changes
 
+## 0.3.1
+
+🐛 Enable logger if `--debug` or failure
+
 ## 0.3.0
 
 🍏 Use [@studio/log][] and [ora][] spinner
