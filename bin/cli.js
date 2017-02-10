@@ -19,6 +19,10 @@ const upload = require('../lib/upload');
 const load_report = require('../lib/load-report');
 const render_report = require('../lib/render-report');
 
+function enableLogger() {
+  logger.transform(log_format({ ts: false, ns: false })).out(process.stdout);
+}
+
 const argv = minimist(process.argv.slice(2), {
   alias: {
     file: 'f',
@@ -39,10 +43,8 @@ if (argv.version) {
   console.log(`${pkg.name} version ${pkg.version}`);
   return;
 }
-
-logger.transform(log_format({ ts: false, ns: false }));
-if (!argv.debug) {
-  logger.mute('json-request', 'fetch');
+if (argv.debug) {
+  enableLogger();
 }
 
 let stream_end = false;
@@ -56,6 +58,9 @@ const spinner = ora('').start();
 
 function fail(message, error) {
   spinner.stop();
+  if (!argv.debug) {
+    enableLogger();
+  }
   logger('cli').error(message, {}, error);
   process.exitCode = 1;
 }
