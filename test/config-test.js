@@ -34,11 +34,28 @@ describe('read', () => {
     sinon.assert.calledWith(spy, null, {});
   });
 
-  it('yields config from file', () => {
+  it('yields config from file (unix)', () => {
     fs.readFile.yields(null, '# JavaScript Studio Config\n'
       + 'api=http://localhost:1337\n'
       + 'account=mantoni\n'
       + 'token=123-456-789\n');
+    const spy = sinon.spy();
+
+    config.read('this/file', spy);
+
+    sinon.assert.calledOnce(spy);
+    sinon.assert.calledWith(spy, null, {
+      api: 'http://localhost:1337',
+      account: 'mantoni',
+      token: '123-456-789'
+    });
+  });
+
+  it('yields config from file (windows)', () => {
+    fs.readFile.yields(null, '# JavaScript Studio Config\r\n'
+      + 'api=http://localhost:1337\r\n'
+      + 'account=mantoni\r\n'
+      + 'token=123-456-789\r\n');
     const spy = sinon.spy();
 
     config.read('this/file', spy);
