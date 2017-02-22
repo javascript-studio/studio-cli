@@ -1,5 +1,9 @@
 # Changes
 
+## 0.3.2
+
+🙈 Support Node 4
+
 ## 0.3.1
 
 🐛 Enable logger if `--debug` or failure
