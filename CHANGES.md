@@ -1,5 +1,10 @@
 # Changes
 
+## 0.3.3
+
+🐛 Fail if config fail can not be read
+🐛 Fix function name handling in stack traces
+
 ## 0.3.2
 
 🙈 Support Node 4
