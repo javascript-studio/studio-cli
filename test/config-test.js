@@ -24,14 +24,14 @@ describe('read', () => {
     sinon.assert.calledWith(fs.readFile, 'some/file', 'utf8', sinon.match.func);
   });
 
-  it('yields an empty object if file can not be read', () => {
+  it('yields an error if file can not be read', () => {
     fs.readFile.yields(new Error('EWHATEVER'));
     const spy = sinon.spy();
 
     config.read('that/file', spy);
 
     sinon.assert.calledOnce(spy);
-    sinon.assert.calledWith(spy, null, {});
+    sinon.assert.calledWith(spy, sinon.match.instanceOf(Error));
   });
 
   it('yields config from file (unix)', () => {
