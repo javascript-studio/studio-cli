@@ -1,5 +1,10 @@
 # Changes
 
+## 0.4.0
+
+- 🍏 Explicitly handle 403s
+- 🐛 Fix indentation of non-matching stack frames
+
 ## 0.3.3
 
 - 🐛 Fail if config fail can not be read
