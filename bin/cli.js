@@ -48,6 +48,7 @@ if (argv.debug) {
   enableLogger();
 }
 
+const working_dir = argv.file ? path.dirname(argv.file) : process.cwd();
 let stream_end = false;
 let config = null;
 let url_json = null;
@@ -101,6 +102,9 @@ function readStream(stream) {
       return;
     }
     source_map = convert_source_map.fromSource(source);
+    if (!source_map) {
+      source_map = convert_source_map.fromMapFileComment(source, working_dir);
+    }
     if (source_map) {
       source_map = source_map.toObject();
       source = convert_source_map.removeComments(source);
