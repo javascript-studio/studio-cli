@@ -1,5 +1,10 @@
 # Changes
 
+## 0.5.0
+
+- 🍏 Show source snippet from source map
+- 🍏 Read source maps from file
+
 ## 0.4.0
 
 - 🍏 Explicitly handle 403s
