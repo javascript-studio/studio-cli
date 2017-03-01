@@ -103,7 +103,11 @@ function readStream(stream) {
     }
     source_map = convert_source_map.fromSource(source);
     if (!source_map) {
-      source_map = convert_source_map.fromMapFileComment(source, working_dir);
+      try {
+        source_map = convert_source_map.fromMapFileComment(source, working_dir);
+      } catch (ignore) {
+        // It throws if there are no source maps
+      }
     }
     if (source_map) {
       source_map = source_map.toObject();
