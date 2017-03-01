@@ -24,6 +24,7 @@ function enableLogger() {
 }
 
 const argv = minimist(process.argv.slice(2), {
+  boolean: ['exceptions'],
   alias: {
     file: 'f',
     global: 'g',
