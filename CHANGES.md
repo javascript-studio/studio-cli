@@ -1,5 +1,9 @@
 # Changes
 
+## 0.5.1
+
+- 🐛 Handle weird node locs
+
 ## 0.5.0
 
 - 🍏 Show source snippet from source map
