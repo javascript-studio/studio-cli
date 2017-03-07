@@ -1,5 +1,9 @@
 # Changes
 
+## 0.5.2
+
+- 🐛 Increase timeout for `CREATED` builds
+
 ## 0.5.1
 
 - 🐛 Handle weird node locs
