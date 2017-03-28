@@ -1,5 +1,11 @@
 # Changes
 
+## 0.6.0
+
+- 🍏 Render values from occurrences
+- 🍏 Improve error report layout and coloring
+- 🐛 Make location regexp more loose
+
 ## 0.5.2
 
 - 🐛 Increase timeout for `CREATED` builds

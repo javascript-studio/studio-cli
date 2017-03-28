@@ -1,6 +1,6 @@
 {
   "name": "@studio/cli",
-  "version": "0.5.2",
+  "version": "0.6.0",
   "description": "The JavaScript Studio CLI",
   "bin": {
     "studio": "bin/cli.js"
