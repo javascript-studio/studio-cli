@@ -6,7 +6,6 @@
 
 const fs = require('fs');
 const path = require('path');
-const url = require('url');
 const zlib = require('zlib');
 const PassThrough = require('stream').PassThrough;
 const minimist = require('minimist');
@@ -15,6 +14,7 @@ const convert_source_map = require('convert-source-map');
 const logger = require('@studio/log');
 const log_format = require('@studio/log/format/fancy');
 const studio_config = require('../lib/config');
+const config_builder = require('../lib/config-builder');
 const upload = require('../lib/upload');
 const load_report = require('../lib/load-report');
 const render_report = require('../lib/render-report');
@@ -154,17 +154,7 @@ studio_config.read(config_file, (err, values) => {
     fail('Failed to read config', err.message);
     return;
   }
-  const api = values.api || 'https://api.javascript.studio/beta';
-  const api_url = url.parse(api);
-
-  config = {
-    protocol: api_url.protocol,
-    hostname: api_url.hostname,
-    basepath: api_url.path === '/' ? '' : api_url.path,
-    port: api_url.port,
-    account: values.account,
-    token: values.token
-  };
+  config = config_builder.build(values);
 
   if (argv.debug) {
     spinner.stop();
