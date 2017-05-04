@@ -53,4 +53,8 @@ browserify --debug script.js | studio
 browserify --debug script.js -s thing | studio --global thing
 ```
 
+## License
+
+MIT
+
 [1]: http://javascript.studio

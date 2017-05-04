@@ -45,5 +45,6 @@
     "bin",
     "lib",
     "README.md"
-  ]
+  ],
+  "license": "MIT"
 }
