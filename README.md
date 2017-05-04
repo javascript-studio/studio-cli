@@ -24,7 +24,7 @@ token=your_token
 
 Never check this file into version control. The token is associated with your
 personal GitHub account. A new token can be created at
-<https://javascript.studio> which will invalidate the previous token.
+<https://javascript.studio/settings> which will invalidate the previous token.
 
 If a `.studio` file is found in the current directory, it is loaded instead of
 the file in the home directory.
