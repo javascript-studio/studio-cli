@@ -14,6 +14,8 @@ describe('set-config', () => {
     sandbox = sinon.sandbox.create();
     state = new State({});
     sandbox.stub(upload, 'url');
+    sandbox.stub(state, 'fail');
+    sandbox.stub(state, 'setUpload');
   });
 
   afterEach(() => {
@@ -38,6 +40,30 @@ describe('set-config', () => {
 
     sinon.assert.calledOnce(upload.url);
     sinon.assert.calledWith(upload.url, state.config, null, sinon.match.func);
+  });
+
+  it('fails if fetching the upload URL errs', () => {
+    upload.url.yields(new Error('No'));
+
+    state.setConfig({ account: 'mantoni', token: '123-456-789' });
+
+    sinon.assert.calledOnce(state.fail);
+    sinon.assert.calledWith(state.fail, 'Failed to get upload URL');
+  });
+
+  it('calls setUpload if fetching the upload URL succeeds', () => {
+    upload.url.yields(null, {
+      url: 'http://localhost:9000/uploads',
+      number: 42
+    });
+
+    state.setConfig({ account: 'mantoni', token: '123-456-789' });
+
+    sinon.assert.calledOnce(state.setUpload);
+    sinon.assert.calledWith(state.setUpload, {
+      url: 'http://localhost:9000/uploads',
+      number: 42
+    });
   });
 
 });
