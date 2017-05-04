@@ -1,7 +1,7 @@
 {
   "name": "@studio/cli",
   "version": "0.6.0",
-  "description": "The JavaScript Studio CLI",
+  "description": "Scan JavaScript sources for runtime errors",
   "bin": {
     "studio": "bin/cli.js"
   },
@@ -14,6 +14,13 @@
     "version": "changes",
     "postversion": "git push --follow-tags && npm publish"
   },
+  "keywords": [
+    "analysis",
+    "runtime",
+    "errors",
+    "exceptions",
+    "report"
+  ],
   "author": "Maximilian Antoni <max@javascript.studio>",
   "homepage": "https://github.com/javascript-studio/studio-cli",
   "eslintConfig": {
