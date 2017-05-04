@@ -34,7 +34,7 @@
     "@studio/eslint-config": "^1.0.0",
     "eslint": "^3.12.2",
     "mocha": "^3.2.0",
-    "sinon": "^1.17.7"
+    "sinon": "^2.2.0"
   },
   "repository": {
     "type": "git",
