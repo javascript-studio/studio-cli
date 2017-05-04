@@ -56,13 +56,19 @@ browserify --debug script.js | studio
 
 # With browserify as a standalone module:
 browserify --debug script.js -s thing | studio --global thing
+
+# With WebPack:
+webpack --devtool source-maps app/index.js dist/bundle.js
+studio --file dist/bundle.js
+
+# With WebPack as a library:
+webpack --devtool source-maps --output-library thing app/module.js dist/library.js
+studio --file dist/library.js --global thing
 ```
 
 Inline source maps are used to map stack traces back to your original sources.
 If source maps are in a separate file, using `--file` automatically resolves
 the source maps file.
-
-WebPack always writes to files. Use `studio --file script.js` to scan a file.
 
 ## License
 
