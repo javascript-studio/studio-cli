@@ -58,6 +58,12 @@ browserify --debug script.js | studio
 browserify --debug script.js -s thing | studio --global thing
 ```
 
+Inline source maps are used to map stack traces back to your original sources.
+If source maps are in a separate file, use `--file` and the source maps will
+resolved.
+
+WebPack always writes to files. Use `studio --file script.js` to scan a file.
+
 ## License
 
 MIT
