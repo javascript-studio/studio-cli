@@ -37,7 +37,6 @@ describe('read', () => {
   it('yields config from file (unix)', () => {
     fs.readFile.yields(null, '# JavaScript Studio Config\n'
       + 'api=http://localhost:1337\n'
-      + 'account=mantoni\n'
       + 'token=123-456-789\n');
     const spy = sinon.spy();
 
@@ -46,7 +45,6 @@ describe('read', () => {
     sinon.assert.calledOnce(spy);
     sinon.assert.calledWith(spy, null, {
       api: 'http://localhost:1337',
-      account: 'mantoni',
       token: '123-456-789'
     });
   });
@@ -54,7 +52,6 @@ describe('read', () => {
   it('yields config from file (windows)', () => {
     fs.readFile.yields(null, '# JavaScript Studio Config\r\n'
       + 'api=http://localhost:1337\r\n'
-      + 'account=mantoni\r\n'
       + 'token=123-456-789\r\n');
     const spy = sinon.spy();
 
@@ -63,7 +60,6 @@ describe('read', () => {
     sinon.assert.calledOnce(spy);
     sinon.assert.calledWith(spy, null, {
       api: 'http://localhost:1337',
-      account: 'mantoni',
       token: '123-456-789'
     });
   });

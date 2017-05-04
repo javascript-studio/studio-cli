@@ -17,15 +17,13 @@ npm install @studio/cli -g
 
 Create `~/.studio/config` with this content:
 
-```json
+```bash
 # JavaScript Studio CLI Config
-account=your_account
 token=your_token
 ```
 
 These properties can be configured:
 
-- `account`: Your GitHub user name (required).
 - `token`: Your JavaScript Studio access token (required).
 - `api`: The API endpoint to use. Defaults to
   `https://api.javascript.studio/beta`

@@ -30,7 +30,7 @@ describe('load-report', () => {
     stderr = new PassThrough();
     sinon.stub(stderr, 'write');
     spinner = ora({ text: '', stream: stderr });
-    config = config_builder.build({ account: 'mantoni', token: '123' });
+    config = config_builder.build({ token: '123' });
     callback = sinon.spy();
   });
 

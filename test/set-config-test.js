@@ -23,10 +23,9 @@ describe('set-config', () => {
   });
 
   it('sets config to given values merged with defaults', () => {
-    state.setConfig({ account: 'mantoni', token: '123-456-789' });
+    state.setConfig({ token: '123-456-789' });
 
     assert.deepEqual(state.config, {
-      account: 'mantoni',
       token: '123-456-789',
       protocol: 'https:',
       hostname: 'api.javascript.studio',
@@ -36,7 +35,7 @@ describe('set-config', () => {
   });
 
   it('fetches upload URL', () => {
-    state.setConfig({ account: 'mantoni', token: '123-456-789' });
+    state.setConfig({ token: '123-456-789' });
 
     sinon.assert.calledOnce(upload.url);
     sinon.assert.calledWith(upload.url, state.config, null, sinon.match.func);
@@ -45,7 +44,7 @@ describe('set-config', () => {
   it('fails if fetching the upload URL errs', () => {
     upload.url.yields(new Error('No'));
 
-    state.setConfig({ account: 'mantoni', token: '123-456-789' });
+    state.setConfig({ token: '123-456-789' });
 
     sinon.assert.calledOnce(state.fail);
     sinon.assert.calledWith(state.fail, 'Failed to get upload URL');
@@ -57,7 +56,7 @@ describe('set-config', () => {
       number: 42
     });
 
-    state.setConfig({ account: 'mantoni', token: '123-456-789' });
+    state.setConfig({ token: '123-456-789' });
 
     sinon.assert.calledOnce(state.setUpload);
     sinon.assert.calledWith(state.setUpload, {
