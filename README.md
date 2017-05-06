@@ -74,4 +74,6 @@ the source maps file.
 
 MIT
 
+<div align="center">Made with ❤️ on 🌍</div>
+
 [1]: http://javascript.studio
