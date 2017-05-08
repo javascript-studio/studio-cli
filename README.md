@@ -76,4 +76,4 @@ MIT
 
 <div align="center">Made with ❤️ on 🌍</div>
 
-[1]: http://javascript.studio
+[1]: https://javascript.studio
