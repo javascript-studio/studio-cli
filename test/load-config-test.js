@@ -4,7 +4,7 @@
 const fs = require('fs');
 const sinon = require('sinon');
 const config = require('../lib/config');
-const State = require('../lib/state');
+const Studio = require('../lib/studio');
 
 const ENOENT = new Error('ENOENT');
 ENOENT.code = 'ENOENT';
@@ -19,7 +19,7 @@ describe('load-config', () => {
     sandbox = sinon.sandbox.create();
     sandbox.stub(fs, 'readFile');
     sandbox.stub(config, 'home').returns('~');
-    state = new State({});
+    state = new Studio({});
     sandbox.stub(state, 'fail');
     sandbox.stub(state, 'setConfig');
   });

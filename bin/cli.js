@@ -7,7 +7,7 @@
 const fs = require('fs');
 const path = require('path');
 const minimist = require('minimist');
-const State = require('../lib/state');
+const Studio = require('../lib/studio');
 
 const argv = minimist(process.argv.slice(2), {
   boolean: ['exceptions'],
@@ -33,4 +33,4 @@ if (argv.version) {
 
 console.log('');
 
-new State(argv).start();
+new Studio(argv).start();

@@ -3,18 +3,18 @@
 
 const assert = require('assert');
 const sinon = require('sinon');
-const State = require('../lib/state');
+const Studio = require('../lib/studio');
 
 describe('start', () => {
   let sandbox;
-  let state;
+  let studio;
 
   beforeEach(() => {
     sandbox = sinon.sandbox.create();
-    state = new State({});
-    sandbox.stub(state, 'loadConfig');
-    sandbox.stub(state, 'readStream');
-    sandbox.stub(state.spinner, 'start').returns(state.spinner);
+    studio = new Studio({});
+    sandbox.stub(studio, 'loadConfig');
+    sandbox.stub(studio, 'readStream');
+    sandbox.stub(studio.spinner, 'start').returns(studio.spinner);
   });
 
   afterEach(() => {
@@ -22,12 +22,12 @@ describe('start', () => {
   });
 
   it('starts spinne, loads config and reads stream', () => {
-    state.start();
+    studio.start();
 
-    sinon.assert.calledOnce(state.spinner.start);
-    sinon.assert.calledOnce(state.loadConfig);
-    sinon.assert.calledOnce(state.readStream);
-    assert.equal(state.spinner.text, 'Reading input');
+    sinon.assert.calledOnce(studio.spinner.start);
+    sinon.assert.calledOnce(studio.loadConfig);
+    sinon.assert.calledOnce(studio.readStream);
+    assert.equal(studio.spinner.text, 'Reading input');
   });
 
 });
