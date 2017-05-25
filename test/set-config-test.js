@@ -46,7 +46,7 @@ describe('set-config', () => {
 
     sinon.assert.calledOnce(upload.url);
     sinon.assert.calledWith(upload.url, studio.config, {
-      encryption: 'aes-256-ctr'
+      encryption: 'aes-128-ctr'
     }, sinon.match.func);
   });
 

@@ -54,13 +54,16 @@ describe('upload-gzip', () => {
     studio.setConfig({ secret });
     studio.uploadGzip();
 
-    const cipher = crypto.createCipher('aes-256-ctr', secret);
-    const encrypted = cipher.update('console.log("Hi!")') + cipher.final();
+    const cipher = crypto.createCipher('aes-128-ctr', secret);
+    const encrypted = Buffer.concat([
+      cipher.update('console.log("Hi!")'),
+      cipher.final()
+    ]);
 
     sinon.assert.calledOnce(upload.upload);
-    sinon.assert.calledWith(upload.upload, 'http://localhost:9000/uploads', 36);
+    sinon.assert.calledWith(upload.upload, 'http://localhost:9000/uploads', 18);
     sinon.assert.calledOnce(stream.write);
-    sinon.assert.calledWith(stream.write, new Buffer(encrypted));
+    sinon.assert.calledWith(stream.write, encrypted);
     sinon.assert.calledOnce(stream.end);
   });
 
