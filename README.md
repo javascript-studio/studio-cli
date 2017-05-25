@@ -31,7 +31,8 @@ the file in the home directory.
 
 These properties can be configured:
 
-- `token`: Your JavaScript Studio access token (required).
+- `token`: Your access token (required).
+- `secret`: Your encryption secret. If provided, uploads are encrypted.
 - `api`: The API endpoint to use. Defaults to
   `https://api.javascript.studio/beta`
 

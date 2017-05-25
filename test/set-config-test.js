@@ -38,7 +38,16 @@ describe('set-config', () => {
     studio.setConfig({ token: '123-456-789' });
 
     sinon.assert.calledOnce(upload.url);
-    sinon.assert.calledWith(upload.url, studio.config, null, sinon.match.func);
+    sinon.assert.calledWith(upload.url, studio.config, {}, sinon.match.func);
+  });
+
+  it('fetches upload URL with encryption', () => {
+    studio.setConfig({ token: '123-456-789', secret: 'qwerty' });
+
+    sinon.assert.calledOnce(upload.url);
+    sinon.assert.calledWith(upload.url, studio.config, {
+      encryption: 'aes-256-ctr'
+    }, sinon.match.func);
   });
 
   it('fails if fetching the upload URL errs', () => {
