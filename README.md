@@ -1,4 +1,4 @@
-# JavaScript Studio CLI
+# Studio CLI
 
 Uploads source code to the [JavaScript Studio][1] web service, fetches the
 error report and prints the results.
