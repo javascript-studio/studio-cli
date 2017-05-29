@@ -200,4 +200,15 @@ describe('load-report', () => {
       '✅  Build completed. No issues found.\n');
   });
 
+  it('shows error message with message', () => {
+    load_report(config, 1, argv, spinner, callback);
+    clock.tick(INITIAL_REQUEST_DELAY);
+
+    request.yield(null, { status: 'FAILED', message: 'Oh noes!' });
+
+    sinon.assert.calledOnce(stderr.write);
+    sinon.assert.calledWith(stderr.write,
+      '⚠️  Build completed with issues - Oh noes!\n');
+  });
+
 });
