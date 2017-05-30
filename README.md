@@ -36,6 +36,13 @@ These properties can be configured:
 - `api`: The API endpoint to use. Defaults to
   `https://api.javascript.studio/beta`
 
+These environment variables can be defined:
+
+- `STUDIO_TOKEN`: Your access token.
+- `STUDIO_SECRET`: Your encryption secret.
+
+Environment variables take precedence over configured values.
+
 ## Usage
 
 Run `studio --help` for all available options.
