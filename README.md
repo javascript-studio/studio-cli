@@ -78,6 +78,12 @@ Inline source maps are used to map stack traces back to your original sources.
 If source maps are in a separate file, using `--file` automatically resolves
 the source maps file.
 
+## Related modules
+
+- 📡 [Studio JSON Request][2] is used for API calls.
+- ☯️ [Studio Log][3] is used for logging.
+- 📦 [Studio Changes][4] is used to create the changelog for this module.
+
 ## License
 
 MIT
@@ -85,3 +91,6 @@ MIT
 <div align="center">Made with ❤️ on 🌍</div>
 
 [1]: https://javascript.studio
+[2]: https://github.com/javascript-studio/studio-json-request
+[3]: https://github.com/javascript-studio/studio-log
+[4]: https://github.com/javascript-studio/studio-changes
