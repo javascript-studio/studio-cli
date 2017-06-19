@@ -34,9 +34,10 @@ These properties can be configured:
 - `token`: Your access token (required).
 - `secret`: Your encryption secret. If provided, uploads are encrypted.
 - `api`: The API endpoint to use. Defaults to
-  `https://api.javascript.studio/beta`
+  `https://api.javascript.studio/beta`.
 
-These environment variables can be defined:
+The access token and the encryption secret can also be specified via
+environment variables:
 
 - `STUDIO_TOKEN`: Your access token.
 - `STUDIO_SECRET`: Your encryption secret.
