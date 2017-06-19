@@ -75,4 +75,21 @@ describe('set-config', () => {
     });
   });
 
+  it('fails if called with empty object and STUDIO_TOKEN is missing', () => {
+    studio.setConfig({});
+
+    sinon.assert.calledOnce(studio.fail);
+    sinon.assert.calledWith(studio.fail, 'Missing .studio or ~/.studio config '
+      + 'file or STUDIO_TOKEN environment variable');
+  });
+
+  it('does not fail if called with empty object and STUDIO_TOKEN is defined',
+  () => {
+    sandbox.stub(process.env, 'STUDIO_TOKEN').value('123');
+
+    studio.setConfig({});
+
+    sinon.assert.notCalled(studio.fail);
+    sinon.assert.calledOnce(upload.url);
+  });
 });

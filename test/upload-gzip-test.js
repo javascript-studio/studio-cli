@@ -51,7 +51,8 @@ describe('upload-gzip', () => {
 
   it('uploads encrypted gzip buffer to upload URL', () => {
     const secret = '97ada65239e190dfbee9ea919bb67078';
-    studio.setConfig({ secret });
+    const token = '123';
+    studio.setConfig({ secret, token });
     studio.uploadGzip();
 
     const cipher = crypto.createCipher('aes-128-ctr', secret);

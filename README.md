@@ -41,7 +41,8 @@ These environment variables can be defined:
 - `STUDIO_TOKEN`: Your access token.
 - `STUDIO_SECRET`: Your encryption secret.
 
-Environment variables take precedence over configured values.
+Environment variables take precedence over configured values. If `STUDIO_TOKEN`
+is defined, the `.studio` file is optional.
 
 ## Usage
 

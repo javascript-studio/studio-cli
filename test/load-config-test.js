@@ -61,14 +61,13 @@ describe('load-config', () => {
     sinon.assert.calledWith(state.fail, 'Failed to read config');
   });
 
-  it('fails if none of the file locations exists', () => {
+  it('set config to empty object if none of the file locations exists', () => {
     fs.readFile.yields(ENOENT);
 
     state.loadConfig();
 
-    sinon.assert.calledOnce(state.fail);
-    sinon.assert.calledWith(state.fail,
-      'Missing .studio or ~/.studio config file', 'ENOENT');
+    sinon.assert.calledOnce(state.setConfig);
+    sinon.assert.calledWith(state.setConfig, {});
   });
 
   it('sets config if .studio read succeeds', () => {
