@@ -27,6 +27,7 @@ describe('set-config', () => {
 
     assert.deepEqual(studio.config, {
       token: '123-456-789',
+      secret: null,
       protocol: 'https:',
       hostname: 'api.javascript.studio',
       port: null,

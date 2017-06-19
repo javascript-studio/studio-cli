@@ -5,7 +5,7 @@ const assert = require('assert');
 const sinon = require('sinon');
 const config_builder = require('../lib/config-builder');
 
-describe.only('config-builder', () => {
+describe('config-builder', () => {
   let sandbox;
 
   beforeEach(() => {
