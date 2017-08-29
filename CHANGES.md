@@ -1,5 +1,22 @@
 # Changes
 
+## 1.0.0
+
+- 🍏 Add support for encrypted uploads with "aes-128-ctr"
+- 🍏 Allow to specify the token and the encryption secret in environment
+  variables
+- 🍏 Exit with code 64 if errors where found
+- 🍏 Make `.studio` file optional if `STUDIO_TOKEN` is defined
+- 🍏 Allow to load the config from `.studio` or `~/.studio`
+- 🍏 Show error message from API response
+- 🍏 Handle status 402
+- 🍏 Remove obsolete "account" from config
+- 🐛 Handle missing `errors` in failed builds
+- 📚 Improve documentation
+- ✨ Use `@studio/json-request` v2.0
+- ✨ Add package-lock.json
+- ✨ Add LICENSE
+
 ## 0.6.0
 
 - 🍏 Render values from occurrences
