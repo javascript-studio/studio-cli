@@ -1,5 +1,9 @@
 # Changes
 
+## 1.0.1
+
+- 🐛 Only set the process exit code to 64 if errors where found
+
 ## 1.0.0
 
 - 🍏 Add support for encrypted uploads with "aes-128-ctr"
