@@ -1,5 +1,9 @@
 # Changes
 
+## 1.1.0
+
+- Support `XDG_CONFIG_HOME` and `~/.config` as config locations
+
 ## 1.0.2
 
 - 🐛 Set process exit code to 64 if either parser or runtime errors where found
