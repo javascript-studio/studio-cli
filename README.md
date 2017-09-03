@@ -19,19 +19,13 @@ The CLI will try to load a configuration file in these locations:
 
 - `.studio` in the current directory
 - `.studio` in your home directory
-- If `XDG_CONFIG_HOME` is defined in `${XDG_CONFIG_HOME}/studio`
+- `$XDG_CONFIG_HOME/studio`
 - `.config/studio` in your home directory
 
 Copy your personal configuration from <https://javascript.studio/settings> into
-your preferred location. Never check this file into version control. The token
-is associated with your personal GitHub account.
+your preferred location. Never check this file into version control.
 
-These properties can be configured:
-
-- `token`: Your access token (required).
-- `secret`: Your encryption secret. If provided, uploads are encrypted.
-- `api`: The API endpoint to use. Defaults to
-  `https://api.javascript.studio/beta`.
+### Environment variables
 
 The access token and the encryption secret can also be specified via
 environment variables:
@@ -42,40 +36,19 @@ environment variables:
 Environment variables take precedence over configured values. If `STUDIO_TOKEN`
 is defined, the `.studio` file is optional.
 
+### Available options
+
+These properties can be configured:
+
+- `token`: Your access token (required).
+- `secret`: Your encryption secret. If provided, uploads are encrypted.
+- `api`: The API endpoint to use. Defaults to
+  `https://api.javascript.studio/beta`.
+
 ## Usage
 
-Run `studio --help` for all available options.
-
-Pipe any JavaScript to the `studio` command or specify a file to analyze:
-
-```bash
-# Analyze a file:
-studio --file script.js
-
-# Using a pipe:
-echo "unknownFunction()" | studio
-
-# With a global entry point or namespace:
-studio -f script.js --global entry
-
-# With browserify:
-browserify --debug script.js | studio
-
-# With browserify as a standalone module:
-browserify --debug script.js -s thing | studio --global thing
-
-# With WebPack:
-webpack --devtool source-maps app/index.js dist/bundle.js
-studio --file dist/bundle.js
-
-# With WebPack as a library:
-webpack --devtool source-maps --output-library thing app/module.js dist/library.js
-studio --file dist/library.js --global thing
-```
-
-Inline source maps are used to map stack traces back to your original sources.
-If source maps are in a separate file, using `--file` automatically resolves
-the source maps file.
+Run `studio --help` for all available options. A usage guide can be found at
+<https://javascript.studio/docs/using-the-client>.
 
 ## Related modules
 
