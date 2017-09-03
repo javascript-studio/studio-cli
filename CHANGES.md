@@ -1,5 +1,9 @@
 # Changes
 
+## 1.0.2
+
+- 🐛 Set process exit code to 64 if either parser or runtime errors where found
+
 ## 1.0.1
 
 - 🐛 Only set the process exit code to 64 if errors where found
