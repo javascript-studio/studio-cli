@@ -15,19 +15,16 @@ npm install @studio/cli -g
 
 ## Configuration
 
-Create a `.studio` file in your home directory with this content:
+The CLI will try to load a configuration file in these locations:
 
-```bash
-# JavaScript Studio CLI Config
-token=your_token
-```
+- `.studio` in the current directory
+- `.studio` in your home directory
+- If `XDG_CONFIG_HOME` is defined in `${XDG_CONFIG_HOME}/studio`
+- `.config/studio` in your home directory
 
-Never check this file into version control. The token is associated with your
-personal GitHub account. A new token can be created at
-<https://javascript.studio/settings> which will invalidate the previous token.
-
-If a `.studio` file is found in the current directory, it is loaded instead of
-the file in the home directory.
+Copy your personal configuration from <https://javascript.studio/settings> into
+your preferred location. Never check this file into version control. The token
+is associated with your personal GitHub account.
 
 These properties can be configured:
 

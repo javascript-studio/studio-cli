@@ -26,6 +26,7 @@ describe('load-config', () => {
 
   afterEach(() => {
     sandbox.restore();
+    delete process.env.XDG_CONFIG_HOME;
   });
 
   it('loads config from .studio', () => {
@@ -43,12 +44,32 @@ describe('load-config', () => {
     sinon.assert.calledWith(fs.readFile, '~/.studio');
   });
 
-  it('loads config from ~/.studio/config', () => {
-    fs.readFile.withArgs('.studio').yields(EISDIR);
+  it('loads config from XDG_CONFIG_HOME', () => {
+    process.env.XDG_CONFIG_HOME = '~/.xdg';
+    fs.readFile.withArgs('.studio').yields(ENOENT);
     fs.readFile.withArgs('~/.studio').yields(ENOENT);
     state.loadConfig();
 
     sinon.assert.calledThrice(fs.readFile);
+    sinon.assert.calledWith(fs.readFile, '~/.xdg/studio');
+  });
+
+  it('loads config from .config/studio', () => {
+    fs.readFile.withArgs('.studio').yields(ENOENT);
+    fs.readFile.withArgs('~/.studio').yields(ENOENT);
+    state.loadConfig();
+
+    sinon.assert.calledThrice(fs.readFile);
+    sinon.assert.calledWith(fs.readFile, '~/.config/studio');
+  });
+
+  it('loads config from ~/.studio/config', () => {
+    fs.readFile.withArgs('.studio').yields(EISDIR);
+    fs.readFile.withArgs('~/.studio').yields(ENOENT);
+    fs.readFile.withArgs('~/.config/studio').yields(ENOENT);
+    state.loadConfig();
+
+    sinon.assert.callCount(fs.readFile, 4);
     sinon.assert.calledWith(fs.readFile, '~/.studio/config');
   });
 
