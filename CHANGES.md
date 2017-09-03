@@ -1,8 +1,12 @@
 # Changes
 
+## 1.1.1
+
+- 📚 Align documentation with JavaScript Studio website
+
 ## 1.1.0
 
-- Support `XDG_CONFIG_HOME` and `~/.config` as config locations
+- 🍏 Support `XDG_CONFIG_HOME` and `~/.config` as config locations
 
 ## 1.0.2
 

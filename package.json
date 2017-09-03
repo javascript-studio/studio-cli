@@ -1,6 +1,6 @@
 {
   "name": "@studio/cli",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Scan JavaScript sources for runtime errors",
   "bin": {
     "studio": "bin/cli.js"
