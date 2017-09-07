@@ -1,11 +1,11 @@
 # Studio CLI
 
-This command line tool encrypts and uploads source code to the [JavaScript
-Studio][1] web service, fetches the error report and prints the results.
-
 JavaScript Studio is a cloud service that finds errors in JavaScript programs
 by dynamically evaluating the source code in a custom runtime. If you do not
-have an account, request an invite at <https://javascript.studio>.
+have an account, log in with GitHub at <https://javascript.studio>.
+
+This command line tool encrypts and uploads source code to the [JavaScript
+Studio][1] web service, fetches the error report and prints the results.
 
 ## Install
 
