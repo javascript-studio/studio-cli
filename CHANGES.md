@@ -1,5 +1,10 @@
 # Changes
 
+## 1.2.0
+
+- 🍏 Render call tree
+- 📚 Invitation is not required anymore
+
 ## 1.1.1
 
 - 📚 Align documentation with JavaScript Studio website
