@@ -1,5 +1,9 @@
 # Changes
 
+## 1.2.1
+
+- ✨ Improve error handing and logging
+
 ## 1.2.0
 
 - 🍏 Render call tree
