@@ -50,7 +50,7 @@ describe('load-report', () => {
     sinon.assert.calledWith(request, config, {
       path: '/uploads/1',
       expect: 200,
-      timeout: 5000
+      timeout: 10000
     });
   });
 
