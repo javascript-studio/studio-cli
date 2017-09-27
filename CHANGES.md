@@ -1,5 +1,9 @@
 # Changes
 
+## 1.2.2
+
+- 🐛 Increase timeout for upload and report requests
+
 ## 1.2.1
 
 - ✨ Improve error handing and logging
