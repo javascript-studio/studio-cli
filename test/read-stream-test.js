@@ -11,7 +11,7 @@ describe('read-stream', () => {
   let studio;
 
   beforeEach(() => {
-    sandbox = sinon.sandbox.create();
+    sandbox = sinon.createSandbox();
     studio = new Studio({});
     sandbox.stub(studio, 'setSource');
   });

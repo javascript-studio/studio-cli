@@ -14,7 +14,7 @@ describe('upload-gzip', () => {
   let stream;
 
   beforeEach(() => {
-    sandbox = sinon.sandbox.create();
+    sandbox = sinon.createSandbox();
     studio = new Studio({});
     studio.upload_json = {
       url: 'http://localhost:9000/uploads',

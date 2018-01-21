@@ -2,18 +2,13 @@
 'use strict';
 
 const assert = require('assert');
-const sinon = require('sinon');
 const config_builder = require('../lib/config-builder');
 
 describe('config-builder', () => {
-  let sandbox;
-
-  beforeEach(() => {
-    sandbox = sinon.sandbox.create();
-  });
 
   afterEach(() => {
-    sandbox.restore();
+    delete process.env.STUDIO_TOKEN;
+    delete process.env.STUDIO_SECRET;
   });
 
   it('returns default API', () => {
@@ -48,7 +43,7 @@ describe('config-builder', () => {
   });
 
   it('uses token from environment', () => {
-    sandbox.stub(process.env, 'STUDIO_TOKEN').value('789-000');
+    process.env.STUDIO_TOKEN = '789-000';
 
     const config = config_builder.build({
       token: '123-456'
@@ -66,7 +61,7 @@ describe('config-builder', () => {
   });
 
   it('uses secret from environment', () => {
-    sandbox.stub(process.env, 'STUDIO_SECRET').value('123456');
+    process.env.STUDIO_SECRET = '123456';
 
     const config = config_builder.build({
       secret: 'abcdef'

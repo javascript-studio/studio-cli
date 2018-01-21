@@ -11,7 +11,7 @@ describe('set-config', () => {
   let studio;
 
   beforeEach(() => {
-    sandbox = sinon.sandbox.create();
+    sandbox = sinon.createSandbox();
     studio = new Studio({});
     sandbox.stub(upload, 'url');
     sandbox.stub(studio, 'fail');
@@ -20,6 +20,8 @@ describe('set-config', () => {
 
   afterEach(() => {
     sandbox.restore();
+    delete process.env.STUDIO_TOKEN;
+    delete process.env.STUDIO_SECRET;
   });
 
   it('sets config to given values merged with defaults', () => {
@@ -85,14 +87,14 @@ describe('set-config', () => {
   });
 
   it('does not fail if called with empty object and STUDIO_TOKEN is defined',
-  () => {
-    sandbox.stub(process.env, 'STUDIO_TOKEN').value('123');
+    () => {
+      process.env.STUDIO_TOKEN = '123';
 
-    studio.setConfig({});
+      studio.setConfig({});
 
-    sinon.assert.notCalled(studio.fail);
-    sinon.assert.calledOnce(upload.url);
-  });
+      sinon.assert.notCalled(studio.fail);
+      sinon.assert.calledOnce(upload.url);
+    });
 
   it('generates iv if secret is given', () => {
     const secret = '0123456789abcdef';
@@ -106,7 +108,7 @@ describe('set-config', () => {
 
   it('generates iv if secret is set in env', () => {
     const secret = '0123456789abcdef';
-    sandbox.stub(process.env, 'STUDIO_SECRET').value(secret);
+    process.env.STUDIO_SECRET = secret;
 
     studio.setConfig({ token: 'abc' });
 

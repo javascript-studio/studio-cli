@@ -16,7 +16,7 @@ describe('load-config', () => {
   let state;
 
   beforeEach(() => {
-    sandbox = sinon.sandbox.create();
+    sandbox = sinon.createSandbox();
     sandbox.stub(fs, 'readFile');
     sandbox.stub(config, 'home').returns('~');
     state = new Studio({});

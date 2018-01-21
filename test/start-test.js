@@ -10,7 +10,7 @@ describe('start', () => {
   let studio;
 
   beforeEach(() => {
-    sandbox = sinon.sandbox.create();
+    sandbox = sinon.createSandbox();
     studio = new Studio({});
     sandbox.stub(studio, 'loadConfig');
     sandbox.stub(studio, 'readStream');
