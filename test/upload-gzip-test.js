@@ -50,12 +50,12 @@ describe('upload-gzip', () => {
   });
 
   it('uploads encrypted gzip buffer to upload URL', () => {
-    const secret = '97ada65239e190dfbee9ea919bb67078';
+    const secret = crypto.randomBytes(16);
     const token = '123';
-    studio.setConfig({ secret, token });
+    studio.setConfig({ secret: secret.toString('hex'), token });
     studio.uploadGzip();
 
-    const cipher = crypto.createCipher('aes-128-ctr', secret);
+    const cipher = crypto.createCipheriv('aes-128-ctr', secret, studio.iv);
     const encrypted = Buffer.concat([
       cipher.update('console.log("Hi!")'),
       cipher.final()

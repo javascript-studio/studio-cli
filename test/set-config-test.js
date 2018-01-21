@@ -47,7 +47,8 @@ describe('set-config', () => {
 
     sinon.assert.calledOnce(upload.url);
     sinon.assert.calledWith(upload.url, studio.config, {
-      encryption: 'aes-128-ctr'
+      encryption: 'aes-128-ctr',
+      iv: sinon.match(/^[0-9a-f]{32}$/)
     }, sinon.match.func);
   });
 
@@ -92,4 +93,32 @@ describe('set-config', () => {
     sinon.assert.notCalled(studio.fail);
     sinon.assert.calledOnce(upload.url);
   });
+
+  it('generates iv if secret is given', () => {
+    const secret = '0123456789abcdef';
+
+    studio.setConfig({ secret, token: 'abc' });
+
+    assert.equal(studio.secret, secret);
+    assert.equal(typeof studio.iv, 'object');
+    assert.equal(studio.iv.length, 16);
+  });
+
+  it('generates iv if secret is set in env', () => {
+    const secret = '0123456789abcdef';
+    sandbox.stub(process.env, 'STUDIO_SECRET').value(secret);
+
+    studio.setConfig({ token: 'abc' });
+
+    assert.equal(studio.secret, secret);
+    assert.equal(typeof studio.iv, 'object');
+    assert.equal(studio.iv.length, 16);
+  });
+
+  it('does not generate iv if secret is not configured', () => {
+    studio.setConfig({ token: 'abc' });
+
+    assert.equal(typeof studio.iv, 'undefined');
+  });
+
 });
