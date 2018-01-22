@@ -1,5 +1,10 @@
 # Changes
 
+## 1.3.0
+
+- 🍏 Use `iv` for encryption
+- ✨ Update Chalk, Studio Log and convert-source-map
+
 ## 1.2.2
 
 - 🐛 Increase timeout for upload and report requests
