@@ -26,6 +26,7 @@ describe('upload-gzip', () => {
     stream = new PassThrough();
     sandbox.stub(stream, 'write');
     sandbox.stub(stream, 'end');
+    sandbox.stub(upload, 'url');
     sandbox.stub(upload, 'upload').returns(stream);
   });
 
