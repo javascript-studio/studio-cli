@@ -6,19 +6,17 @@ const sinon = require('sinon');
 const Studio = require('../lib/studio');
 
 describe('start', () => {
-  let sandbox;
   let studio;
 
   beforeEach(() => {
-    sandbox = sinon.createSandbox();
     studio = new Studio({});
-    sandbox.stub(studio, 'loadConfig');
-    sandbox.stub(studio, 'readStream');
-    sandbox.stub(studio.spinner, 'start').returns(studio.spinner);
+    sinon.stub(studio, 'loadConfig');
+    sinon.stub(studio, 'readStream');
+    sinon.stub(studio.spinner, 'start').returns(studio.spinner);
   });
 
   afterEach(() => {
-    sandbox.restore();
+    sinon.restore();
   });
 
   it('starts spinne, loads config and reads stream', () => {

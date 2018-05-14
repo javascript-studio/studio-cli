@@ -12,20 +12,18 @@ const EISDIR = new Error('EISDIR');
 EISDIR.code = 'EISDIR';
 
 describe('load-config', () => {
-  let sandbox;
   let state;
 
   beforeEach(() => {
-    sandbox = sinon.createSandbox();
-    sandbox.stub(fs, 'readFile');
-    sandbox.stub(config, 'home').returns('~');
+    sinon.stub(fs, 'readFile');
+    sinon.stub(config, 'home').returns('~');
     state = new Studio({});
-    sandbox.stub(state, 'fail');
-    sandbox.stub(state, 'setConfig');
+    sinon.stub(state, 'fail');
+    sinon.stub(state, 'setConfig');
   });
 
   afterEach(() => {
-    sandbox.restore();
+    sinon.restore();
     delete process.env.XDG_CONFIG_HOME;
   });
 

@@ -9,29 +9,27 @@ const upload = require('../lib/upload');
 const Studio = require('../lib/studio');
 
 describe('upload-gzip', () => {
-  let sandbox;
   let studio;
   let stream;
 
   beforeEach(() => {
-    sandbox = sinon.createSandbox();
     studio = new Studio({});
     studio.upload_json = {
       url: 'http://localhost:9000/uploads',
       number: 42
     };
     studio.gzip_buffer = new Buffer('console.log("Hi!")');
-    sandbox.stub(studio, 'fail');
-    sandbox.stub(studio, 'loadReport');
+    sinon.stub(studio, 'fail');
+    sinon.stub(studio, 'loadReport');
     stream = new PassThrough();
-    sandbox.stub(stream, 'write');
-    sandbox.stub(stream, 'end');
-    sandbox.stub(upload, 'url');
-    sandbox.stub(upload, 'upload').returns(stream);
+    sinon.stub(stream, 'write');
+    sinon.stub(stream, 'end');
+    sinon.stub(upload, 'url');
+    sinon.stub(upload, 'upload').returns(stream);
   });
 
   afterEach(() => {
-    sandbox.restore();
+    sinon.restore();
   });
 
   it('sets the spinner text to "Uploading"', () => {

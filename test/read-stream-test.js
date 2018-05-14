@@ -7,22 +7,20 @@ const sinon = require('sinon');
 const Studio = require('../lib/studio');
 
 describe('read-stream', () => {
-  let sandbox;
   let studio;
 
   beforeEach(() => {
-    sandbox = sinon.createSandbox();
     studio = new Studio({});
-    sandbox.stub(studio, 'setSource');
+    sinon.stub(studio, 'setSource');
   });
 
   afterEach(() => {
-    sandbox.restore();
+    sinon.restore();
   });
 
   it('reads stdin content and sets source', (done) => {
     const stream = new PassThrough();
-    sandbox.stub(process, 'stdin').get(() => stream);
+    sinon.stub(process, 'stdin').get(() => stream);
 
     studio.readStream();
     process.stdin.write('console.log("Hi!")');
@@ -37,7 +35,7 @@ describe('read-stream', () => {
 
   it('reads file content and sets source', (done) => {
     const stream = new PassThrough();
-    sandbox.stub(fs, 'createReadStream').returns(stream);
+    sinon.stub(fs, 'createReadStream').returns(stream);
     studio.argv.file = 'some/file.js';
 
     studio.readStream();

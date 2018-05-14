@@ -6,15 +6,13 @@ const sinon = require('sinon');
 const config = require('../lib/config');
 
 describe('read', () => {
-  let sandbox;
 
   beforeEach(() => {
-    sandbox = sinon.createSandbox();
-    sandbox.stub(fs, 'readFile');
+    sinon.stub(fs, 'readFile');
   });
 
   afterEach(() => {
-    sandbox.restore();
+    sinon.restore();
   });
 
   it('reads given file', () => {

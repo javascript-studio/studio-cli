@@ -7,19 +7,17 @@ const upload = require('../lib/upload');
 const Studio = require('../lib/studio');
 
 describe('set-config', () => {
-  let sandbox;
   let studio;
 
   beforeEach(() => {
-    sandbox = sinon.createSandbox();
     studio = new Studio({});
-    sandbox.stub(upload, 'url');
-    sandbox.stub(studio, 'fail');
-    sandbox.stub(studio, 'setUpload');
+    sinon.stub(upload, 'url');
+    sinon.stub(studio, 'fail');
+    sinon.stub(studio, 'setUpload');
   });
 
   afterEach(() => {
-    sandbox.restore();
+    sinon.restore();
     delete process.env.STUDIO_TOKEN;
     delete process.env.STUDIO_SECRET;
   });

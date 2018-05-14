@@ -29,13 +29,14 @@ describe('load-report', () => {
     clock = sinon.useFakeTimers();
     stderr = new PassThrough();
     sinon.stub(stderr, 'write');
-    spinner = ora({ text: '', stream: stderr });
+    spinner = ora({ text: '', stream: stderr, enabled: true });
     config = config_builder.build({ token: '123' });
     callback = sinon.spy();
   });
 
   afterEach(() => {
     clock.restore();
+    sinon.restore();
   });
 
   it('fires upload request with initial delay', () => {
