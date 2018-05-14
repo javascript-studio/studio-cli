@@ -1,5 +1,10 @@
 # Changes
 
+## 1.3.1
+
+- ✨ Update dependencies and adjust tests
+- 🐛 Stub `upload.url()` to avoid network call in test
+
 ## 1.3.0
 
 - 🍏 Use `iv` for encryption
